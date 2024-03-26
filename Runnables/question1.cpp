@@ -9,7 +9,7 @@
 
 int main(){
     StaticGraph<NoVertexAttributes,WithTravelTime> graph;
-    Graph::fromDimacs("./USA-road-d.FLA.gr",graph);
+    Graph::fromDimacs("USA-road-d.FLA.gr",graph);
     Dijkstra<StaticGraph<NoVertexAttributes,WithTravelTime>> dijkstra(graph);
    
 
@@ -36,35 +36,20 @@ int main(){
         std::vector<Vertex> path = dijkstra.getPath(random_destination_vertex);
 
         int distance = dijkstra.getDistance(random_destination_vertex);
+        if(!path.empty() &&
+            distance == 0){
+            std::cout<<"Error: Path is not empty but distance is 0"<<std::endl;
+        }
+        else{
+            std::cout<<"Path is empty and distance is 0"<<std::endl;
+        }
+        for(Vertex vert : path){
+            std::cout<<vert<<", ";
+        }
+        std::cout<<std::endl<<"Length: "<< distance<<std::endl;
 
-    }
-
-    double milliseconds_passed = timer.elapsedMilliseconds();
+    }double milliseconds_passed = timer.elapsedMilliseconds();
     std::cout<<"Total runtime in seconds for 200 random Dijkstra\'s : "<<milliseconds_passed/1000<<" seconds"<<std::endl;
-
-
-
-        
-
-/*
-    //TEST CASES [VWorks]
-    //Source = 0, Target = 1
-    //Source = 264345, Target = 264327
-
-    Vertex source(1234);
-    Vertex target(1272);
-    dijkstra.run(source,target);
-
-    std::vector<Vertex> path = dijkstra.getPath(target);
-
-    for(Vertex vert : path){
-        std::cout<<vert<<", ";
-    }
-    std::cout<<std::endl;
-    int length = dijkstra.getDistance(target);
-    std::cout<<"Length: "<< length<<std::endl;
-
-*/
     return 0;
 }
 
